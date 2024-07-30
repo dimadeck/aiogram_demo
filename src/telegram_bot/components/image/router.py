@@ -32,7 +32,7 @@ async def download_photo(bot: Bot, photo: PhotoSize) -> Optional[bool]:
     if not settings.IMAGE_DIR:
         return
     file_info = await bot.get_file(photo.file_id)
-    destination = os.path.join(settings.IMAGE_DIR, file_info.file_path)
-    os.makedirs(os.path.dirname(destination), exist_ok=True)
-    await bot.download_file(file_info.file_path, destination=destination)
-    return os.path.exists(destination)
+    destination_path = os.path.join(settings.IMAGE_DIR, file_info.file_path)
+    os.makedirs(os.path.dirname(destination_path), exist_ok=True)
+    await bot.download_file(file_info.file_path, destination=destination_path)
+    return os.path.exists(destination_path)

@@ -3,6 +3,6 @@ class WeatherInitException(Exception):
     pass
 
 
-class CalculateTemperatureException(Exception):
+class WeatherTemperatureException(Exception):
     """Ошибка, выбрасываемая при исключениях во время получении погоды - Weather.get_temperature()"""
     pass

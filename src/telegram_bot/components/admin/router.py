@@ -4,10 +4,10 @@ from aiogram.types import Message, BotCommand
 
 from telegram_bot.components.admin.messages import AdminMessages
 from telegram_bot.components.user.service import UserService
-from telegram_bot.middlewares.admin_middleware import UserNotAdminMiddleware
+from telegram_bot.middlewares.admin_middleware import CheckAdminMiddleware
 
 router = Router()
-router.message.middleware(UserNotAdminMiddleware())
+router.message.middleware(CheckAdminMiddleware())
 
 commands = [
     BotCommand(command='users', description='Показать пользователей'),
@@ -15,6 +15,6 @@ commands = [
 
 
 @router.message(Command('users'))
-async def users_handler(message: Message) -> None:
+async def show_users(message: Message) -> None:
     users = await UserService().get_all_users()
     await message.answer(AdminMessages.show_users(users))

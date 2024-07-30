@@ -3,9 +3,9 @@ from typing import Callable, Any, Awaitable, Dict
 from aiogram import BaseMiddleware
 from aiogram.types import Message
 
-from utils.logging import get_log_channel
+from utils.logger import get_log_channel
 
-log = get_log_channel('Aiogram Demo Launcher')
+log = get_log_channel('Logger Middleware')
 
 
 class LoggerMiddleware(BaseMiddleware):

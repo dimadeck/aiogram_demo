@@ -1,6 +1,6 @@
 from pyowm import OWM
 
-from core.weather.exceptions import WeatherInitException, CalculateTemperatureException
+from core.weather.exceptions import WeatherInitException, WeatherTemperatureException
 
 
 class Weather:
@@ -54,4 +54,4 @@ class Weather:
             observation = self._mgr.weather_at_place(city)
             return observation.weather.temperature('celsius')['temp']
         except Exception as e:
-            raise CalculateTemperatureException(str(e))
+            raise WeatherTemperatureException(str(e))

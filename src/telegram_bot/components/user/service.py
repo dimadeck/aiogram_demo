@@ -30,6 +30,6 @@ class UserService(BaseCRUD):
         )
         return UserSchema.model_validate(user)
 
-    async def get_all_users(self):
+    async def get_all_users(self) -> list[UserSchema]:
         users = await self._get_many({})
         return [UserSchema.model_validate(user) for user in users]

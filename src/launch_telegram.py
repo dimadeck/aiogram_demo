@@ -1,7 +1,7 @@
 import asyncio
 
 from telegram_bot.dispatcher import launch_bot
-from utils.logging import get_log_channel
+from utils.logger import get_log_channel
 
 log = get_log_channel('Aiogram Demo Launcher')
 
