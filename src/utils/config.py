@@ -1,9 +1,10 @@
+import os
 from typing import Optional
 
 from pydantic import Field
 from pydantic_settings import BaseSettings
 
-ENV_PATH = '../.env'
+ENV_PATH = os.environ.get('AIOGRAM_DEMO_ENV_PATH', '../.env')
 
 
 class Settings(BaseSettings):

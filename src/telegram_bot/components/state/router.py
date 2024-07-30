@@ -5,6 +5,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message, BotCommand
 
 from telegram_bot.components.state.messages import StateMessages
+from telegram_bot.components.user.schema import UserSchema
 
 router = Router()
 commands = [
@@ -18,7 +19,7 @@ class BasicStates(StatesGroup):
 
 
 @router.message(Command('state_routine'))
-async def launch_state_routine(message: Message, state: FSMContext, user):
+async def launch_state_routine(message: Message, state: FSMContext, user: UserSchema) -> None:
     await state.set_state(BasicStates.WAIT_NAME)
     await message.answer(StateMessages.wait_name_message(user))
 

@@ -5,9 +5,11 @@ from aiogram.filters.command import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message, BotCommand
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from telegram_bot.components.scheduler.handler import remind_user
 from telegram_bot.components.scheduler.messages import ScheduleMessages
+from telegram_bot.components.user.schema import UserSchema
 
 router = Router()
 commands = [
@@ -16,7 +18,7 @@ commands = [
 
 
 @router.message(Command('remind_me'))
-async def remind_me(message: Message, user, scheduler, state: FSMContext) -> None:
+async def remind_me(message: Message, user: UserSchema, scheduler: AsyncIOScheduler, state: FSMContext) -> None:
     job = scheduler.add_job(
         remind_user,
         trigger='date',
@@ -33,7 +35,7 @@ class WaitingStates(StatesGroup):
 
 
 @router.message(WaitingStates.WAITING_ANSWER)
-async def cancel_task(message: Message, state: FSMContext, scheduler):
+async def cancel_task(message: Message, state: FSMContext, scheduler: AsyncIOScheduler):
     await message.answer(ScheduleMessages.cancel_waiting())
     data = await state.get_data()
     scheduler.remove_job(data['job_id'])

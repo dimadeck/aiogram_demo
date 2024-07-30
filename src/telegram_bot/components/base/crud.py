@@ -13,19 +13,19 @@ class BaseCRUD:
             await session.commit()
             return model_obj
 
-    async def _get_one(self, search_fields):
+    async def _get_one(self, search_fields: dict[str, any]):
         sql = select(self.MODEL).filter_by(**search_fields)
         async with async_session() as session:
             query = await session.execute(sql)
             return query.scalar_one()
 
-    async def _get_many(self, search_fields):
+    async def _get_many(self, search_fields: dict[str, any]):
         sql = select(self.MODEL).filter_by(**search_fields)
         async with async_session() as session:
             query = await session.execute(sql)
             return query.scalars().all()
 
-    async def _update(self, search_fields, **kwargs):
+    async def _update(self, search_fields: dict[str, any], **kwargs):
         sql = update(self.MODEL).filter_by(**search_fields).values(**kwargs).execution_options(
             synchronize_session="fetch"
         )
@@ -34,7 +34,7 @@ class BaseCRUD:
             await session.commit()
             return await self._get_one(search_fields)
 
-    async def _delete(self, search_fields):
+    async def _delete(self, search_fields: dict[str, any]):
         obj = await self._get_one(search_fields)
         async with async_session() as session:
             await session.delete(obj)

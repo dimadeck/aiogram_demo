@@ -4,6 +4,9 @@ from aiogram import BaseMiddleware
 from aiogram.types import Message
 
 from utils.config import settings
+from utils.logging import get_log_channel
+
+log = get_log_channel('Aiogram Demo Launcher')
 
 
 class ExceptionMiddleware(BaseMiddleware):
@@ -16,7 +19,7 @@ class ExceptionMiddleware(BaseMiddleware):
         try:
             return await handler(event, data)
         except Exception as e:
-            print(f"Handle message error: {str(e)}")
+            log.error(f"Handle message error: {str(e)}")
             if settings.DEBUG:
                 await event.answer(f'Ошибка: {str(e)}')
             await event.answer('Произошла ошибка, попробуйте позже!')

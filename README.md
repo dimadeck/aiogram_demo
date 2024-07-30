@@ -159,8 +159,8 @@
 
     Склонировать репозиторий
 
-    $ git clone repo
-    $ cd repo
+    $ git clone https://github.com/dimadeck/aiogram_demo
+    $ cd https://github.com/dimadeck/aiogram_demo
     $ nano .env
 
     Заполнить переменные окружения

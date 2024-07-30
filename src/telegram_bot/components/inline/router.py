@@ -24,7 +24,7 @@ class InlineButtonCallback(CallbackData, prefix="inline_callback"):
     data: Optional[str] = None
 
 
-async def get_keyboard():
+async def get_keyboard() -> InlineKeyboardBuilder:
     keyboard = InlineKeyboardBuilder()
     keyboard.button(
         text='ℹ️ Выбор 1',

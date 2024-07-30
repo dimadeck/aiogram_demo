@@ -4,6 +4,7 @@ from aiogram.filters.command import Command
 from aiogram.types import Message, BotCommand
 
 from telegram_bot.components.user.messages import UserMessages
+from telegram_bot.components.user.schema import UserSchema
 from telegram_bot.components.user.service import UserService
 
 router = Router()
@@ -18,12 +19,12 @@ commands = [
 
 
 @router.message(CommandStart())
-async def command_start_handler(message: Message, user) -> None:
+async def command_start_handler(message: Message, user: UserSchema) -> None:
     await message.answer(UserMessages.welcome_message(user))
 
 
 @router.message(Command('me'))
-async def command_start_handler(message: Message, user) -> None:
+async def command_start_handler(message: Message, user: UserSchema) -> None:
     await message.answer(UserMessages.me(user))
 
 
@@ -33,12 +34,12 @@ async def command_start_handler(message: Message) -> None:
 
 
 @router.message(Command('admin_on'))
-async def admin_on(message: Message, user) -> None:
+async def admin_on(message: Message, user: UserSchema) -> None:
     user = await UserService().change_admin_role(user.id, True)
     await message.answer(UserMessages.admin_status(user.is_admin))
 
 
 @router.message(Command('admin_off'))
-async def admin_off(message: Message, user) -> None:
+async def admin_off(message: Message, user: UserSchema) -> None:
     user = await UserService().change_admin_role(user.id, False)
     await message.answer(UserMessages.admin_status(user.is_admin))

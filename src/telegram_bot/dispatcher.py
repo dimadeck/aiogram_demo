@@ -15,6 +15,7 @@ from telegram_bot.components.state.router import router as state_router
 from telegram_bot.components.user.router import router as user_router
 from telegram_bot.components.weather.router import router as weather_router
 from telegram_bot.middlewares.exception_middleware import ExceptionMiddleware
+from telegram_bot.middlewares.logger_middleware import LoggerMiddleware
 from telegram_bot.middlewares.schedule_middleware import SchedulerMiddleware
 from telegram_bot.middlewares.user_middleware import UserMiddleware
 from utils.config import settings
@@ -26,9 +27,10 @@ async def launch_bot() -> None:
     scheduler = AsyncIOScheduler()
     scheduler.start()
     scheduler.add_job(daily_message, trigger='cron', hour=9, minute=0, kwargs={'bot': bot})
-    dp.message.middleware.register(UserMiddleware())
-    dp.message.middleware.register(ExceptionMiddleware())
+    dp.update.middleware.register(UserMiddleware())
+    dp.update.middleware.register(ExceptionMiddleware())
     dp.update.middleware.register(SchedulerMiddleware(scheduler))
+    dp.update.middleware.register(LoggerMiddleware())
     dp.include_router(user_router)
     dp.include_router(inline_router)
     dp.include_router(state_router)

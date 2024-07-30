@@ -14,5 +14,5 @@ async def echo_handler(message: Message) -> None:
 
 
 @router.message()
-async def unknown_handler(message) -> None:
+async def unknown_handler(message: Message) -> None:
     raise ValueError('Unknown message')

@@ -1,8 +1,9 @@
 import os.path
+from typing import Optional
 
-from aiogram import Router, F
+from aiogram import Router, F, Bot
 from aiogram.filters.command import Command
-from aiogram.types import Message, BotCommand
+from aiogram.types import Message, BotCommand, PhotoSize
 
 from telegram_bot.components.image.messages import ImageMessages
 from utils.config import settings
@@ -14,7 +15,7 @@ commands = [
 
 
 @router.message(F.photo, Command('photo'))
-async def photo_handler(message: Message, bot) -> None:
+async def photo_handler(message: Message, bot: Bot) -> None:
     photo = message.photo[-1]
     downloaded = await download_photo(bot, photo)
     await message.answer(
@@ -27,7 +28,7 @@ async def photo_handler(message: Message, bot) -> None:
     )
 
 
-async def download_photo(bot, photo):
+async def download_photo(bot: Bot, photo: PhotoSize) -> Optional[bool]:
     if not settings.IMAGE_DIR:
         return
     file_info = await bot.get_file(photo.file_id)
