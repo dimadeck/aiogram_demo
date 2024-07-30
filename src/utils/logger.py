@@ -23,7 +23,7 @@ def config_logging(formatter: str = None, datefmt: str = None, level: str = None
     log = logging.getLogger()
 
 
-config_logging(level='info', output_filename=settings.EVENT_MANAGER_LOG_FILENAME)
+config_logging(level='info', output_filename=settings.LOG_FILENAME)
 
 
 def get_log_channel(name: str = None) -> logging.Logger:

@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     DEBUG: bool = Field(env='DEBUG')
 
     IMAGE_DIR: Optional[str] = Field(env='IMAGE_DIR', default=None)
+    LOG_FILENAME: Optional[str] = Field(env='LOG_FILENAME', default=None)
 
     TELEGRAM_BOT_TOKEN: str = Field(env='TELEGRAM_BOT_TOKEN')
     WEATHER_API_KEY: str = Field(env='WEATHER_API_KEY')

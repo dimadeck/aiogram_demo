@@ -176,6 +176,8 @@
     WEATHER_API_KEY=<WEATHER_TOKEN>
     DEBUG=True
     IMAGE_DIR=/app/images
+    LOG_FILENAME=/app/log.log
+
 
 ### Инициализация и настройка базы
     
