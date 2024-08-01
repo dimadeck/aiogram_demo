@@ -160,7 +160,7 @@
     Склонировать репозиторий
 
     $ git clone https://github.com/dimadeck/aiogram_demo
-    $ cd https://github.com/dimadeck/aiogram_demo
+    $ cd aiogram_demo/
     $ nano .env
 
     Заполнить переменные окружения
@@ -182,12 +182,23 @@
 ### Инициализация и настройка базы
     
     Перед выполнением процесса накатывания миграций, изменить DB_HOST на нужный (например, 0.0.0.0)
+    
     Создать директорию для db volume
     $ mkdir resources
+    
     Запустить базу из docker-compose
     $ docker-compose up -d db
-
+    
+    Установить alembic (и другие зависимости):
+    $ python3.10 -m venv env
+    $ source env/bin/activate
+    
+    $ pip install -r requirements.txt
+    или 
+    $ pip install alembic
+    
     Накатить миграции
+    $ cd src
     $ alembic upgrade head
 
     Вернуть DB_HOST на db (для общения между контейнерами)

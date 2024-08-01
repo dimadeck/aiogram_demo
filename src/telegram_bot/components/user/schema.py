@@ -9,8 +9,8 @@ from telegram_bot.components.base.schema import BaseSchema
 
 class CreateUserSchema(BaseSchema):
     id: int
-    first_name: str = Field(exclude=True)
-    last_name: str = Field(exclude=True)
+    first_name: Optional[str] = Field(exclude=True, default=None)
+    last_name: Optional[str] = Field(exclude=True, default=None)
     username: Optional[str] = None
     is_active: Optional[bool] = None
 
