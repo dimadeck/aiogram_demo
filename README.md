@@ -206,3 +206,14 @@
 ### Запуск бота
 
     $ docker-compose up -d telegram_bot
+
+
+### ChangeLog
+
+    Разработка и интеграция основных механизмов
+    Добавлено логирование
+    Рефакторинг
+    Изменена схема пользователя (Model и Schema):
+        При отсутствии first_name или last_name происходила ошибка ValidationError
+        UserID пользователя мог выходить за пределы Integer - тип изменен на BigInteger
+    ExceptionMiddleware перенесена на верхний уровень
