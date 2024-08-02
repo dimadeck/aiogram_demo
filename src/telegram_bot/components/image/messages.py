@@ -8,4 +8,4 @@ class ImageMessages:
 
     @staticmethod
     def need_photo() -> str:
-        return 'Необходимо к сообщению прикрепить изображение!'
+        return 'Отправьте фотографию!'

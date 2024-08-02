@@ -1,8 +1,10 @@
 import os.path
 from typing import Optional
 
-from aiogram import Router, F, Bot
+from aiogram import Router, Bot
 from aiogram.filters.command import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message, BotCommand, PhotoSize
 
 from telegram_bot.components.image.messages import ImageMessages
@@ -14,8 +16,28 @@ commands = [
 ]
 
 
-@router.message(F.photo, Command('photo'))
-async def photo_handler(message: Message, bot: Bot) -> None:
+class PhotoStates(StatesGroup):
+    WAIT_PHOTO = State()
+
+
+@router.message(Command('photo'))
+async def photo_handler(message: Message, bot: Bot, state: FSMContext) -> None:
+    if message.photo:
+        await photo_routine(message, bot)
+        return
+    await state.set_state(PhotoStates.WAIT_PHOTO)
+    await message.answer(ImageMessages.need_photo())
+
+
+@router.message(PhotoStates.WAIT_PHOTO)
+async def wait_photo_handler(message: Message, bot: Bot, state: FSMContext) -> None:
+    if message.photo:
+        await state.clear()
+        await photo_routine(message, bot)
+        return
+
+
+async def photo_routine(message, bot):
     photo = message.photo[-1]
     downloaded = await download_photo(bot, photo)
     await message.answer(

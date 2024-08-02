@@ -33,3 +33,6 @@ class UserService(BaseCRUD):
     async def get_all_users(self) -> list[UserSchema]:
         users = await self._get_many({})
         return [UserSchema.model_validate(user) for user in users]
+
+    async def update_user(self, user_id: int, name: str, age: int) -> None:
+        await self._update(search_fields=dict(id=user_id), db_name=name, age=age)

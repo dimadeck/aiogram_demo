@@ -12,7 +12,6 @@ class CreateUserSchema(BaseSchema):
     first_name: Optional[str] = Field(exclude=True, default=None)
     last_name: Optional[str] = Field(exclude=True, default=None)
     username: Optional[str] = None
-    is_active: Optional[bool] = None
 
     @computed_field
     def name(self) -> str:
@@ -22,8 +21,10 @@ class CreateUserSchema(BaseSchema):
 class UserSchema(BaseSchema):
     old_uuid: UUID = Field(alias='uuid', exclude=True)
     id: int
-    name: str
+    tg_name: str = Field(alias='name', exclude=True)
+    db_name: Optional[str] = None
     username: Optional[str] = None
+    age: Optional[int] = None
     is_active: bool
     is_admin: bool
     old_created_at: Optional[datetime] = Field(alias='created_at', exclude=True, default=None)
@@ -31,6 +32,10 @@ class UserSchema(BaseSchema):
     @computed_field
     def uuid(self) -> str:
         return str(self.old_uuid)
+
+    @computed_field
+    def name(self) -> str:
+        return self.db_name or self.tg_name
 
     @computed_field
     def created_at(self) -> str:

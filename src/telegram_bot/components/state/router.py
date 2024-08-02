@@ -6,6 +6,7 @@ from aiogram.types import Message, BotCommand
 
 from telegram_bot.components.state.messages import StateMessages
 from telegram_bot.components.user.schema import UserSchema
+from telegram_bot.components.user.service import UserService
 
 router = Router()
 commands = [
@@ -32,9 +33,10 @@ async def wait_name_handler(message: Message, state: FSMContext) -> None:
 
 
 @router.message(BasicStates.WAIT_AGE)
-async def wait_age_handler(message: Message, state: FSMContext) -> None:
+async def wait_age_handler(message: Message, state: FSMContext, user) -> None:
     await state.update_data(age=int(message.text))
     user_data = await state.get_data()
+    await UserService().update_user(user_id=user.id, name=user_data['name'], age=user_data['age'])
     await message.answer(
         StateMessages.show_info_message(
             user_data['name'],
